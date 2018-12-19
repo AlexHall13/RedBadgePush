@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allownull: false,
         },
-        dataAdded: {
+        dateAdded: {
             type: DataTypes.STRING,
             allownull: false,
         }

@@ -7,7 +7,7 @@ var sequelize = require('./db');
 
 var bodyParser = require('body-parser');
 
-var auth = require('./controllers/authcontrollers');
+// var auth = require('./controllers/authcontrollers');
 var entry = require('./controllers/entrycontrollers')
 
 sequelize.sync()
