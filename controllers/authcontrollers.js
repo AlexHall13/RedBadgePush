@@ -4,6 +4,7 @@ var sequelize = require('../db');
 var User = sequelize.import('../models/auth');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+var validateSession = require('../middleware/validate-session');
 
 router.post('/signup', function (req, res) {    
     var username = req.body.user.username;
@@ -54,11 +55,44 @@ router.post('/login', function (req, res) {
 
 })
 
-router.get('/getall', function (req, res) {
+router.get('/getall', validateSession, function (req, res) {
     User.findAll()
         .then(
             function findAllSuccess(user) {
                 res.status(200).json({user})
             });
 });
+
+
+router.put('/:id',validateSession, function (req, res) {
+  const data = req.params.id;
+  const username = req.body.user.username;
+  const password = req.body.user.password;
+
+    User
+    .update({
+      username: username,
+      password:bcrypt.hashSync(password, 10)  
+
+    },
+      { where: { id: data, } }
+    ).then(
+      function updateSuccess(updatedUser) {
+        res.json({
+          updatedUser: updatedUser
+        });
+      },
+      function updateError(err) {
+        res.send(500, err.message);
+      }
+    )
+});
+
+router.delete("/:id",validateSession,  (req, res) =>
+  User.destroy({ where: { id: req.params.id } })
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(500).json(req.errors))
+);
+
+
 module.exports = router;
