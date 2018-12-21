@@ -1,5 +1,9 @@
 module.exports = function (sequelize, DataTypes) {
     const EntryFacet = sequelize.define('entry', {
+        userId: {
+            type: DataTypes.INTEGER,
+            allownull: false,
+        },
         title: {
             type: DataTypes.STRING,
             allownull: false,

@@ -7,17 +7,19 @@ var sequelize = require('./db');
 
 var bodyParser = require('body-parser');
 
-// var auth = require('./controllers/authcontrollers');
+var auth = require('./controllers/authcontrollers');
 var entry = require('./controllers/entrycontrollers')
 
-sequelize.sync()
+sequelize.sync ()
 
-app.use(require('./middleware/headers'));
+
 app.use(bodyParser.json());
+app.use(require('./middleware/headers'));
 
 app.use('/user', auth);
-app.use(require('./middleware/validate-session'));
 app.use('/entry', entry);
+app.use(require('./middleware/validate-session'));
+
 app.listen(process.env.PORT, () => {
   console.log(`Server is listening on port ${process.env.PORT}`)
 })

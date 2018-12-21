@@ -5,7 +5,6 @@ var EntryFacet = sequelize.import('../models/entry');
 
 router.post('/createnew', function (req, res) {
     EntryFacet.create({
-       userId: req.user.id,
        title: req.body.entry.title,
        content: req.body.entry.content,
        dateAdded: req.body.entry.dateAdded,
